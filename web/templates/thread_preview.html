@@ -1,0 +1,18 @@
+<div class="thread-preview">
+    {{with index .Posts 0}}
+        {{if .ImageURL}}
+        <img src="{{.ImageURL}}" class="thread-preview__img" alt="img">
+        {{end}}
+        <div class="thread-preview__content">
+            <a class="thread-link" href="/threads/{{$.Thread.ID}}">
+                {{if $.Thread.Title}}{{$.Thread.Title}}{{else}}Без названия{{end}}
+            </a>
+            <div class="thread-preview__meta">
+                {{$.Thread.Author}} | {{$.Thread.CreatedAt.Format "02.01.2006 15:04"}}
+            </div>
+            <div class="thread-preview__text">
+                {{.Text}}
+            </div>
+        </div>
+    {{end}}
+</div> 

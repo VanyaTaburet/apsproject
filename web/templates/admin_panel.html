@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Админ-панель - vagonach</title>
+    <link rel="stylesheet" href="/static/styles/admin.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div class="admin-page">
+        <div class="admin-header">
+            <div class="admin-header-left">
+                <img src="/static/img/vagonach-logo.png" alt="vagonach" class="admin-logo">
+                <div class="admin-title-group">
+                    <h1>vagonach</h1>
+                    <span class="admin-subtitle">Админ-панель</span>
+                </div>
+            </div>
+            
+            <div class="admin-header-right">
+                <nav class="admin-nav">
+                    <a href="/">Главная</a>
+                    <a href="/about">О проекте</a>
+                </nav>
+                <a href="/admin/logout" class="logout-btn">Выйти</a>
+            </div>
+        </div>
+
+        <div class="admin-content">
+            <div class="welcome-section">
+                <h2>Добро пожаловать в админ-панель!</h2>
+                <p>Здесь вы можете управлять контентом и модерировать сайт.</p>
+                <p>Debug: Threads count = {{len .Threads}}</p>
+            </div>
+
+            <div class="stats-section">
+                <div class="stat-card">
+                    <div class="stat-number">{{len .Threads}}</div>
+                    <div class="stat-label">Всего тредов</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">10</div>
+                    <div class="stat-label">Всего постов</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">1</div>
+                    <div class="stat-label">Онлайн</div>
+                </div>
+            </div>
+
+            <div class="management-section">
+                <h2>Управление тредами</h2>
+                
+                {{if .Threads}}
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Борда</th>
+                                <th>Заголовок</th>
+                                <th>Автор</th>
+                                <th>Дата</th>
+                                <th>Статус</th>
+                                <th>Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{range .Threads}}
+                            <tr>
+                                <td class="thread-id">#{{.Thread.ID}}</td>
+                                <td class="board-slug">/{{.Thread.BoardSlug}}/</td>
+                                <td class="thread-title">
+                                    {{if .Thread.Title}}
+                                        {{.Thread.Title}}
+                                    {{else}}
+                                        <em>Без названия</em>
+                                    {{end}}
+                                </td>
+                                <td class="thread-author">
+                                    {{if .Thread.Author}}
+                                        {{.Thread.Author}}
+                                    {{else}}
+                                        Аноним
+                                    {{end}}
+                                </td>
+                                <td class="thread-date">{{.Thread.CreatedAt.Format "02.01.06 15:04"}}</td>
+                                <td class="thread-status">
+                                    {{if .Thread.Sticky}}<span class="status-sticky">Закреплен</span>{{end}}
+                                    {{if .Thread.Locked}}<span class="status-locked">Заблокирован</span>{{end}}
+                                    {{if not .Thread.Sticky}}{{if not .Thread.Locked}}<span class="status-normal">Обычный</span>{{end}}{{end}}
+                                </td>
+                                <td class="thread-actions">
+                                    <div class="action-buttons">
+                                        <a href="/threads/{{.Thread.ID}}" target="_blank" class="btn btn-view" title="Открыть тред">👁</a>
+                                        
+                                        <form method="post" action="/admin/threads/{{.Thread.ID}}/sticky" style="display:inline;">
+                                            <button type="submit" class="btn btn-sticky" title="{{if .Thread.Sticky}}Открепить{{else}}Закрепить{{end}}">
+                                                {{if .Thread.Sticky}}📌{{else}}📍{{end}}
+                                            </button>
+                                        </form>
+                                        
+                                        <form method="post" action="/admin/threads/{{.Thread.ID}}/lock" style="display:inline;">
+                                            <button type="submit" class="btn btn-lock" title="{{if .Thread.Locked}}Разблокировать{{else}}Заблокировать{{end}}">
+                                                {{if .Thread.Locked}}🔓{{else}}🔒{{end}}
+                                            </button>
+                                        </form>
+                                        
+                                        <form method="post" action="/admin/threads/{{.Thread.ID}}/delete" style="display:inline;">
+                                            <button type="submit" class="btn btn-delete" onclick="return confirm('Удалить тред?')" title="Удалить">🗑</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            {{end}}
+                        </tbody>
+                    </table>
+                </div>
+                {{else}}
+                <p>Нет тредов для отображения</p>
+                {{end}}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

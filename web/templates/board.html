@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ .Board.Name }} - {{ .Board.Description }}</title>
+    <link rel="stylesheet" href="/static/styles/board.css">
+    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <header>
+        <div>
+            <a href="http://localhost:8080/">
+                <img src="/static/img/vagonach-logo.png" alt="Logo">
+            </a>
+        </div>
+        <div>
+            <h1>Anonymous imageboard.</h1>
+        </div>
+    </header>
+
+    <main>
+        <div class="board-banner">
+            <img src="/static/img/banner.jpg" alt="Banner" class="board-banner-img">
+            <div class="board-title">
+                <span class="board-slug">/{{ .Board.Slug }}/</span> - {{ .Board.Name }}
+            </div>
+        </div>
+
+        <div class="start-thread-btn-wrap">
+            <button id="show-thread-form" class="start-thread-btn btn" type="button"
+                onclick="document.getElementById('thread-form').style.display='block'; this.style.display='none'; document.getElementById('close-thread-form').style.display='inline-block';">
+                [Start a New Thread]
+            </button>
+            <button id="close-thread-form" class="close-thread-btn btn" type="button" style="display:none"
+                onclick="document.getElementById('thread-form').style.display='none'; this.style.display='none'; document.getElementById('show-thread-form').style.display='inline-block';">
+                [Close]
+            </button>
+        </div>
+
+        <form id="thread-form" class="thread-form" style="display:none;"
+            hx-post="/boards/{{.Board.Slug}}/threads"
+            hx-target=".threads-list"
+            hx-swap="afterbegin"
+            enctype="multipart/form-data">
+            <input type="text" name="author" placeholder="Name" class="thread-form__input thread-form__input-wide">
+            <input type="text" name="title" placeholder="Title" class="thread-form__input thread-form__input-wide">
+            <textarea name="text" placeholder="Comment" class="thread-form__textarea thread-form__input-wide"></textarea>
+            <input type="file" name="image" accept="image/*" class="thread-form__input thread-form__input-wide">
+            <button type="submit" class="thread-form__button btn">Post</button>
+        </form>
+
+        <section class="threads-list">
+            {{range .ThreadPreviews}}
+                {{ $thread := .Thread }}
+                <div class="thread-preview-row">
+                    <!-- Основной пост треда -->
+                    <div class="thread-main-post">
+                        {{if .Posts}}
+                            {{with index .Posts 0}}
+                                {{if .ImageURL}}
+                                    <img src="{{.ImageURL}}" class="thread-preview-img" alt="img">
+                                {{end}}
+                                <div class="thread-preview-content">
+                                    <div class="thread-preview-header">
+                                        <span class="thread-title-small">
+                                            {{if $thread.Title}}{{$thread.Title}}{{else}}Без названия{{end}}
+                                        </span>
+                                        <span class="thread-author">
+                                            {{if .Author}}{{.Author}}{{else}}Аноним{{end}}
+                                        </span>
+                                        <span class="thread-date">{{$thread.CreatedAt.Format "01/02/06 15:04:05"}}</span>
+                                        <span class="thread-id">No.{{$thread.ID}}</span>
+                                        <a href="/threads/{{$thread.ID}}" class="reply-link">[Reply]</a>
+                                    </div>
+                                    <div class="thread-preview-text">{{.Text}}</div>
+                                </div>
+                            {{end}}
+                        {{end}}
+                    </div>
+
+                    <!-- Первые 3 комментария -->
+                    {{if gt (len .Posts) 1}}
+                        <div class="thread-replies">
+                            {{range $index, $post := .Posts}}
+                                {{if and (gt $index 0) (lt $index 4)}}
+                                    <div class="thread-reply">
+                                        <div class="reply-header">
+                                            <span class="reply-author">
+                                                {{if $post.Author}}{{$post.Author}}{{else}}Аноним{{end}}
+                                            </span>
+                                            <span class="reply-date">{{$post.CreatedAt.Format "01/02/06 15:04:05"}}</span>
+                                            <span class="reply-id">No.{{$post.ID}}</span>
+                                        </div>
+                                        <div class="reply-content">
+                                            {{if $post.ImageURL}}
+                                                <img src="{{$post.ImageURL}}" class="reply-image" alt="img">
+                                            {{end}}
+                                            <div class="reply-text">{{$post.Text}}</div>
+                                        </div>
+                                    </div>
+                                {{end}}
+                            {{end}}
+                            
+                            {{if gt (len .Posts) 4}}
+                                <div class="show-more-replies">
+                                    <a href="/threads/{{$thread.ID}}">[View more replies]</a>
+                                </div>
+                            {{end}}
+                        </div>
+                    {{end}}
+                </div>
+            {{end}}
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Создаем навигационное меню
+            const nav = document.createElement('nav');
+            nav.className = 'dvach-nav';
+            nav.innerHTML = `
+                <div class="dvach-nav__title">Boards</div>
+                <ul class="dvach-nav__list">
+                    <li><a href="/boards/a">/a/ Anime</a></li>
+                    <li><a href="/boards/g">/g/ General</a></li>
+                    <li><a href="/boards/po">/po/ Politics</a></li>
+                    <li><a href="/boards/un">/un/ Universities</a></li>
+                    <li><a href="/boards/pr">/pr/ Programming</a></li>
+                </ul>`;
+            document.body.appendChild(nav);
+
+            // Создаем кнопку меню
+            const menuToggle = document.createElement('button');
+            menuToggle.className = 'menu-toggle btn';
+            menuToggle.textContent = '☰ Menu';
+            document.body.appendChild(menuToggle);
+
+            // Создаем overlay
+            const overlay = document.createElement('div');
+            overlay.className = 'nav-overlay';
+            document.body.appendChild(overlay);
+
+            const main = document.querySelector('main');
+
+            // Открытие/закрытие меню
+            menuToggle.addEventListener('click', function() {
+                nav.classList.toggle('open');
+                overlay.classList.toggle('active');
+                main.classList.toggle('content-shifted');
+                menuToggle.classList.toggle('open');
+                
+                if (nav.classList.contains('open')) {
+                    menuToggle.textContent = '✕ Close';
+                } else {
+                    menuToggle.textContent = '☰ Menu';
+                }
+            });
+
+            // Закрытие меню по клику на overlay
+            overlay.addEventListener('click', function() {
+                nav.classList.remove('open');
+                overlay.classList.remove('active');
+                main.classList.remove('content-shifted');
+                menuToggle.classList.remove('open');
+                menuToggle.textContent = '☰ Menu';
+            });
+
+            // Закрытие по Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && nav.classList.contains('open')) {
+                    nav.classList.remove('open');
+                    overlay.classList.remove('active');
+                    main.classList.remove('content-shifted');
+                    menuToggle.classList.remove('open');
+                    menuToggle.textContent = '☰ Menu';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

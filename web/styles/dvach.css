@@ -1,0 +1,128 @@
+.dvach-layout {
+    display: flex;
+    flex-direction: row;
+    max-width: 1600px; /* Увеличено */
+    margin: 0 auto;
+    padding: 16px;
+    gap: 24px;
+}
+
+.dvach-main {
+    flex: 1;
+    max-width: 1100px; /* Расширено */
+}
+
+.thread-container {
+    background: #fffdf8;
+    border: 1px solid #c48a3b;
+    padding: 24px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.thread-posts {
+    margin-bottom: 24px;
+}
+
+.post {
+    display: flex;
+    gap: 20px;
+    background: #fffef9;
+    border: 1px solid #d1b58a;
+    padding: 14px 18px;
+    border-radius: 5px;
+    margin-bottom: 18px;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.post-image {
+    max-width: 220px;     /* увеличено */
+    max-height: 220px;
+    border-radius: 4px;
+    cursor: zoom-in;
+}
+
+.post-content {
+    flex: 1;
+}
+
+.post-text {
+    white-space: pre-wrap;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.post-meta {
+    font-size: 14px;
+    color: #444;
+    margin-bottom: 8px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.post-form {
+    border-top: 1px dashed #c48a3b;
+    padding-top: 20px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.post-form__input,
+.post-form__textarea {
+    font-size: 16px;
+    padding: 10px;
+    width: 100%;
+}
+
+.post-form__textarea {
+    min-height: 100px;
+}
+
+.post-form__button {
+    font-size: 16px;
+    padding: 10px 24px;
+}
+
+.dvach-nav {
+    width: 200px;
+    background: #fff8e1 !important;
+    border: 1px solid #c48a3b !important;
+    border-radius: 4px;
+    padding: 12px;
+    font-size: 16px;
+}
+
+.dvach-nav__title {
+    font-weight: bold;
+    color: #800000;
+    margin-bottom: 12px;
+    font-size: 18px;
+    border-bottom: 1px solid #d97b5a;
+    padding-bottom: 4px;
+}
+
+.dvach-nav__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dvach-nav__list li {
+    margin-bottom: 8px;
+}
+
+.dvach-nav__list a {
+    color: #2d217c;
+    text-decoration: none;
+}
+
+.dvach-nav__list a:hover {
+    color: #c0392b;
+    text-decoration: underline;
+}

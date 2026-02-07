@@ -1,0 +1,647 @@
+/* 4chan Style CSS - с плавающей формой и унифицированными кнопками */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(to bottom, #fffbe6 0%, #f8e4cc 100%);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: radial-gradient(circle, rgba(196,138,59,0.18) 2px, transparent 2.5px);
+    background-size: 18px 18px;
+    background-position: 0 0;
+}
+
+/* Унифицированный стиль кнопок */
+.btn {
+    background: #e8dcc6;
+    border: 1px solid #b8860b;
+    color: #800000;
+    font-size: 11pt;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 3px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+}
+
+.btn:hover {
+    background: #ddd0b4;
+    color: #600000;
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+/* Header - без плашки */
+header {
+    padding: 15px 0;
+    position: relative;
+    z-index: 50;
+}
+
+header > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+    gap: 20px;
+}
+
+header img {
+    height: 50px;
+    width: auto;
+}
+
+header h1 {
+    font-size: 20px;
+    color: #800000;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+/* Image Modal */
+.img-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+.img-modal__close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.img-modal__close:hover {
+    color: #ccc;
+}
+
+.img-modal__img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+}
+
+/* Layout */
+.dvach-layout {
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Navigation */
+.dvach-nav {
+    width: 200px;
+    background: #e8dcc6;
+    border-right: 2px solid #b8860b;
+    position: fixed;
+    height: 100vh;
+    top: 0;
+    left: -200px;
+    transition: left 0.3s ease;
+    z-index: 100;
+    overflow-y: auto;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.dvach-nav.open {
+    left: 0;
+}
+
+.dvach-nav__title {
+    background: #e8dcc6;
+    color: #800000;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #b8860b;
+    cursor: pointer;
+    position: sticky;
+    top: 0;
+}
+
+.dvach-nav__title:hover {
+    background: #ddd0b4;
+}
+
+.dvach-nav__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.dvach-nav__list li {
+    border-bottom: 1px solid #b8860b;
+}
+
+.dvach-nav__list a {
+    display: block;
+    padding: 12px 15px;
+    color: #222;
+    text-decoration: none;
+    font-size: 11pt;
+    background: #e8dcc6;
+    transition: all 0.2s;
+}
+
+.dvach-nav__list a:hover {
+    background: #ddd0b4;
+    color: #800000;
+}
+
+/* Menu toggle button - унифицированный стиль */
+.menu-toggle {
+    position: fixed;
+    top: 15px;
+    left: 10px;
+    z-index: 101;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.menu-toggle.open {
+    left: 210px;
+}
+
+/* Main content */
+.dvach-main {
+    flex: 1;
+    padding: 20px;
+    margin-top: 20px;
+    transition: margin-left 0.3s ease;
+}
+
+.dvach-main.shifted {
+    margin-left: 200px;
+}
+
+/* Thread container */
+.thread-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.thread-container > a {
+    color: #c0392b;
+    text-decoration: none;
+    font-size: 12pt;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+.thread-container > a:hover {
+    text-decoration: underline;
+}
+
+.thread-container h1 {
+    font-size: 28px;
+    color: #1e3a8a;
+    font-weight: bold;
+    margin: 15px 0 10px 0;
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Thread meta */
+.thread-meta {
+    text-align: center;
+    font-size: 10pt;
+    color: #666;
+    margin-bottom: 20px;
+    padding: 8px;
+    background: #f9f3e6;
+    border: 1px solid #d97b5a;
+    border-radius: 3px;
+}
+
+.thread-meta span {
+    margin-right: 15px;
+}
+
+/* Thread posts */
+.thread-posts {
+    margin-bottom: 30px;
+}
+
+.post {
+    margin-bottom: 15px;
+    background: #fff;
+    border: 1px solid #c48a3b;
+    border-radius: 3px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.post:first-child {
+    border: 2px solid #d97b5a;
+    background: #f9f3e6;
+}
+
+.post-image {
+    float: left;
+    margin: 10px 15px 10px 10px;
+    max-width: 200px;
+    max-height: 200px;
+    border: 1px solid #c48a3b;
+    cursor: zoom-in;
+    object-fit: contain;
+}
+
+.post-content {
+    padding: 10px;
+    overflow: hidden;
+}
+
+.post-meta {
+    font-size: 9pt;
+    color: #666;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.post-meta span:first-child {
+    color: #228B22;
+    font-weight: bold;
+}
+
+.post-text {
+    font-size: 10pt;
+    line-height: 1.4;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    color: #000;
+    clear: both;
+    padding-top: 5px;
+}
+
+/* Reply button */
+.reply-toggle {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Floating post form - как на настоящем дваче */
+.post-form {
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    background: #f9f3e6;
+    border: 2px solid #c48a3b;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 200;
+    display: none;
+}
+
+.post-form.active {
+    display: block;
+}
+
+/* Draggable header */
+.post-form__header {
+    background: #e8dcc6;
+    border-bottom: 1px solid #c48a3b;
+    padding: 8px 12px;
+    cursor: move;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+}
+
+.post-form__title {
+    font-weight: bold;
+    color: #800000;
+    font-size: 11pt;
+}
+
+.post-form__close {
+    background: none;
+    border: none;
+    color: #800000;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.post-form__close:hover {
+    color: #600000;
+}
+
+.post-form__body {
+    padding: 15px;
+    display: grid;
+    gap: 12px;
+}
+
+.post-form__input, .post-form__textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #c48a3b;
+    border-radius: 3px;
+    font-size: 10pt;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #fff;
+    box-sizing: border-box;
+}
+
+.post-form__input {
+    height: 32px;
+}
+
+.post-form__textarea {
+    height: 80px;
+    resize: vertical;
+}
+
+/* File input - без стиля */
+.post-form input[type="file"] {
+    width: 100%;
+    height: 32px;
+    border: 1px solid #c48a3b;
+    border-radius: 3px;
+    background: #fff;
+    font-size: 10pt;
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+/* Убираем стилизацию кнопки файла */
+.post-form input[type="file"]::-webkit-file-upload-button {
+    display: none;
+}
+
+.post-form input[type="file"]::-moz-file-upload-button {
+    display: none;
+}
+
+.post-form__button {
+    justify-self: start;
+}
+
+/* Utility classes */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Overlay для закрытия меню */
+.nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.3);
+    z-index: 99;
+    display: none;
+}
+
+.nav-overlay.active {
+    display: block;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    header > div {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    header img {
+        height: 40px;
+    }
+    
+    header h1 {
+        font-size: 16px;
+    }
+    
+    .menu-toggle {
+        top: 10px;
+    }
+    
+    .menu-toggle.open {
+        left: 210px;
+    }
+    
+    .dvach-main {
+        padding: 10px;
+        margin-top: 10px;
+    }
+    
+    .dvach-main.shifted {
+        margin-left: 0;
+    }
+    
+    .post-image {
+        float: none;
+        display: block;
+        margin: 10px auto;
+        max-width: 100%;
+    }
+    
+    .post-content {
+        padding: 8px;
+    }
+    
+    .thread-container h1 {
+        font-size: 24px;
+    }
+    
+    .post-form {
+        width: 90%;
+        left: 5%;
+        transform: none;
+    }
+}
+
+/* 4chan-style enhancements */
+.greentext {
+    color: #789922;
+}
+
+.quote {
+    color: #789922;
+}
+
+.quotelink {
+    color: #d00;
+    text-decoration: none;
+}
+
+.quotelink:hover {
+    color: #f00;
+    text-decoration: underline;
+}
+
+/* Post numbers styling */
+.post-meta span:last-child {
+    color: #b31010;
+    font-weight: normal;
+}
+
+/* Thread title in posts */
+.post:first-child .post-meta::before {
+    content: "OP ";
+    color: #c0392b;
+    font-weight: bold;
+}
+
+/* Hover effects for posts */
+.post:hover {
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* Clear floats */
+.post::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.thread-preview-text {
+    font-size: 15px;
+    color: #222;
+    margin-top: 6px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    position: relative;
+}
+
+.thread-preview-text.collapsed {
+    max-height: 4.5em; /* примерно 3 строки */
+    overflow: hidden;
+}
+
+.thread-preview-text.collapsed::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 1.5em;
+    background: linear-gradient(transparent, #fff);
+    pointer-events: none;
+}
+
+.expand-toggle {
+    color: #800000;
+    cursor: pointer;
+    font-size: 12px;
+    text-decoration: underline;
+    margin-top: 4px;
+    display: inline-block;
+}
+
+.expand-toggle:hover {
+    color: #c0392b;
+}
+
+/* Стили для ответов под тредом */
+.thread-replies {
+    margin-top: 10px;
+    padding-left: 15px;
+    border-left: 2px solid #c48a3b;
+    background: #f9f9f9;
+    padding: 8px 15px;
+    border-radius: 0 3px 3px 0;
+}
+
+.thread-reply {
+    margin-bottom: 8px;
+    font-size: 13px;
+    line-height: 1.3;
+}
+
+.thread-reply:last-child {
+    margin-bottom: 0;
+}
+
+.reply-meta {
+    color: #666;
+    font-size: 11px;
+    margin-bottom: 3px;
+}
+
+.reply-author {
+    color: #228B22;
+    font-weight: bold;
+}
+
+.reply-text {
+    color: #333;
+}
+
+.replies-toggle {
+    color: #800000;
+    cursor: pointer;
+    font-size: 12px;
+    text-decoration: underline;
+    margin-top: 8px;
+    display: inline-block;
+}
+
+.replies-toggle:hover {
+    color: #c0392b;
+}
+
+.thread-stats {
+    font-size: 11px;
+    color: #666;
+    margin-top: 5px;
+    font-style: italic;
+}

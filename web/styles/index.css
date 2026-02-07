@@ -1,0 +1,641 @@
+body {
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(to bottom, #fffbe6 0%, #f8e4cc 100%);
+    font-family: Arial, Helvetica, sans-serif;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: -1; /* теперь точки под контентом */
+    pointer-events: none;
+    background-image: radial-gradient(circle, rgba(196,138,59,0.18) 2px, transparent 2.5px);
+    background-size: 18px 18px;
+    background-position: 0 0;
+}
+
+header {
+    text-align: center;
+    margin-top: 24px;
+    margin-bottom: 8px;
+}
+
+header img {
+    max-width: 320px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+header h1 {
+    margin: 8px 0 0 0;
+    font-size: 16px;
+    color: #196b19;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.boards-box {
+    margin-top: 24px;
+    background: #d6c099;
+    border: 1.5px solid #d97b5a;
+    border-radius: 3px;
+    width: 420px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    overflow: hidden;
+    margin-bottom: 20px; /* вот эта строка! */
+}
+
+.boards-header {
+    background: #ffd6b3;
+    color: #c0392b;
+    font-weight: bold;
+    font-size: 22px;
+    padding: 8px 12px;
+    border-bottom: 1px solid #d97b5a;
+    text-align: left;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.boards-header::after {
+    color: #c0392b;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.boards-box ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.boards-box li {
+    border-bottom: 1px solid #d97b5a;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    padding-left: 12px;
+    font-size: 18px;
+    background: #fff;
+}
+
+.boards-box li:last-child {
+    border-bottom: none;
+}
+
+.boards-box a {
+    color: #222;
+    text-decoration: none;
+    font-weight: normal;
+    transition: color 0.2s;
+}
+
+.boards-box a:hover {
+    color: #c0392b;
+    text-decoration: underline;
+}
+
+.footer-fixed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-links {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 4px;
+    justify-content: center;
+    width: 100%;
+}
+
+.footer-links a {
+    display: inline-block;
+    padding: 8px 22px;
+    background: #ffd6b3;
+    color: #c0392b;
+    font-weight: bold;
+    font-size: 18px;
+    border: 1.5px solid #d97b5a;
+    border-radius: 5px;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.footer-links a:hover {
+    background: #ffe2c6;
+    color: #440000;
+    box-shadow: 0 4px 16px rgba(192,57,43,0.08);
+}
+
+.footer-note {
+    color: #c0392b;
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+
+.thread-preview {
+    display: flex;
+    align-items: flex-start;
+    border: 1px solid #c48a3b;
+    background: #fff;
+    margin: 18px 0;
+    padding: 12px;
+    gap: 18px;
+}
+
+.thread-image {
+    max-width: 260px;
+    max-height: 180px;
+    border-radius: 4px;
+}
+
+.thread-info {
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+
+.thread-title {
+    font-weight: bold;
+    color: #2d217c;
+    font-size: 14px;
+    margin-right: 12px;
+}
+
+.thread-author {
+    color: #228B22;
+    font-weight: bold;
+    margin-right: 12px;
+}
+
+
+
+.thread-text {
+    margin-top: 4px;
+    font-size: 15px;
+}
+
+.start-thread-btn-wrap {
+    text-align: center;
+    margin: 16px 0;
+}
+
+.start-thread-btn {
+    font-size: 20px;
+    color: #c0392b;
+    background: #ffd6b3;
+    border: 2px solid #d97b5a;
+    border-radius: 6px;
+    font-weight: bold;
+    padding: 8px 32px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    transition: background 0.2s, color 0.2s;
+}
+
+.start-thread-btn:hover {
+    background: #ffe2c6;
+    color: #440000;
+}
+
+.thread-form-table {
+    margin: 0 auto 24px auto;
+    border-collapse: collapse;
+    background: #f3f3ff;
+    border: 1.5px solid #b6b6e0;
+    font-size: 16px;
+    min-width: 420px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+
+.thread-form-table td {
+    border: 1px solid #b6b6e0;
+    padding: 6px 8px;
+}
+
+.form-label {
+    background: #b6a1e0;
+    color: #222;
+    font-weight: bold;
+    width: 120px;
+    text-align: right;
+}
+
+.thread-form-table input[type="text"], 
+.thread-form-table textarea {
+    width: 98%;
+    font-size: 15px;
+    padding: 4px;
+    border: 1px solid #b6b6e0;
+    border-radius: 3px;
+    background: #fff;
+}
+
+.thread-form-table textarea {
+    min-height: 60px;
+    resize: vertical;
+}
+
+.post-btn {
+    margin-left: 8px;
+    padding: 4px 16px;
+    font-size: 15px;
+    background: #ffd6b3;
+    color: #c0392b;
+    border: 1px solid #d97b5a;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.post-btn:hover {
+    background: #ffe2c6;
+    color: #440000;
+}
+
+.threads-list {
+    padding: 0 12px; /* отступы слева и справа */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.thread-preview-row {
+    display: flex;
+    max-width: 720px; 
+    margin-left: auto;
+    margin-right: auto;
+    align-items: flex-start;
+    border: 1px solid #c48a3b;
+    background: #fff;
+    margin: 18px 0;
+    padding: 12px;
+    gap: 18px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.thread-preview-img {
+    max-width: 250px;
+    max-height: 180px;
+    border-radius: 4px;
+    margin-right: 18px;
+    object-fit: contain;
+}
+
+.thread-preview-content {
+    flex: 1;
+    max-width: 600px;
+    word-wrap: break-word;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.thread-preview-header {
+    display: flex;
+    flex-wrap: nowrap; /* запрет переноса */
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.thread-title {
+    font-family: 'Arial', sans-serif;
+    font-size: 1.25rem;       /* размер шрифта заголовка */
+    font-weight: 600;         /* чуть жирнее, чтобы выделить */
+    margin: 0;
+    line-height: 1.2;
+    color: #222;
+}
+
+.thread-author {
+    font-family: 'Arial', sans-serif;
+    font-size: 1.25rem;       /* такой же размер шрифта */
+    font-weight: bold;         /* чуть легче, чтобы отделить от заголовка */
+    margin: 0 0 0 8px;       /* отступ слева для разделения */
+    color: #034f10;
+}
+
+
+.thread-id {
+    color: #bbb;
+    font-size: 13px;
+    margin-right: 12px;
+}
+
+.thread-preview-header a {
+    margin-left: auto;
+    color: #800000;
+    font-size: 15px;
+    text-decoration: underline;
+}
+
+.thread-preview-header a.reply-link {
+    margin-left: 12px;
+    color: #800000;
+    font-size: 14px;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.thread-preview-header a.reply-link:hover {
+    color: #c0392b;
+}
+
+.thread-preview-header a:hover {
+    color: #c0392b;
+}
+
+.thread-preview-text {
+    font-size: 15px;
+    color: #222;
+    margin-top: 6px;
+    white-space: pre-wrap; /* переносы строк сохраняются */
+    word-break: break-word;
+}
+
+.thread-form__input-wide {
+    width: 320px;
+    margin-bottom: 8px;
+}
+
+.close-thread-btn {
+    background: #ffd6b3;
+    color: #800000;
+    border: 1.5px solid #c48a3b;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 6px 18px;
+    margin-left: 8px;
+    cursor: pointer;
+    margin-top: 6px;
+}
+.close-thread-btn:hover {
+    background: #ffe2c6;
+    color: #440000;
+}
+
+.thread-form {
+    background: #f9f3e6;
+    border: 1.5px solid #c48a3b;
+    padding: 16px 12px 12px 12px;
+    margin-bottom: 24px;
+    width: 420px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    text-align: left;
+}
+
+.thread-form__input, .thread-form__textarea {
+    background: #fff;
+    border: 1px solid #c48a3b;
+    border-radius: 3px;
+    font-size: 15px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 6px;
+}
+
+.thread-title-author {
+    display: flex;
+    align-items: center;
+    font-size: 1px;
+    gap: 1px;
+    white-space: nowrap; /* не переносить заголовок и автора */
+}
+
+.thread-title, .thread-author {
+    font-family: Arial, sans-serif;
+    font-size: 1.25rem;   /* одинаковый размер */
+    line-height: 1.2;
+    margin: 0;
+}
+
+.thread-title {
+    font-weight: 600;
+    color: #2d217c; /* бордовый оттенок */
+}
+
+.thread-author {
+    font-size: 14px;
+    color: #064422;
+}
+
+.thread-title-small {
+    font-size: 14px;
+    font-weight: bold;
+    color: #2d217c;
+    margin-right: 12px;
+}
+
+.board-title {
+    font-size: 26px;        /* Сделать больше */
+    font-weight: bold;      /* Сделать жирным */
+    color: #800000;         /* Бордовый цвет */
+    margin-top: 12px;
+    margin-bottom: 16px;
+}
+
+.board-slug {
+    color: #c0392b;       /* Чуть ярче бордовый */
+    font-weight: bold;
+}
+
+.board-banner-img {
+    width: 100%;
+    max-width: 400px; /* или 500px, 400px — подбери нужный размер */
+    height: auto;
+    display: block;
+    margin: 0 auto; /* центрирование по горизонтали */
+}
+
+.board-banner {
+    margin-top: 30px; /* сдвигает вниз баннер и /a/ - Аниме */
+}
+
+.board-title {
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+    color: #800000;
+    margin-top: 12px;
+}
+
+.thread-date {
+    color: #000000;
+    font-size: 13px;
+}
+
+.thread-id {
+    color: #b31010;
+    font-size: 13px;
+    margin-left: 12px;
+}
+
+/* Ваш существующий CSS + добавления */
+
+/* Recent Threads секция */
+.recent-threads-box {
+    margin-top: 24px;
+    background: #d6c099;
+    border: 1.5px solid #d97b5a;
+    border-radius: 3px;
+    width: 720px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.recent-threads-header {
+    background: #ffd6b3;
+    color: #c0392b;
+    font-weight: bold;
+    font-size: 22px;
+    padding: 8px 12px;
+    border-bottom: 1px solid #d97b5a;
+    text-align: left;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.recent-threads-list {
+    background: #fff;
+}
+
+.recent-thread-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 12px;
+    border-bottom: 1px solid #d97b5a;
+    gap: 12px;
+}
+
+.recent-thread-item:last-child {
+    border-bottom: none;
+}
+
+.recent-thread-item:hover {
+    background: #f9f9f9;
+}
+
+.recent-thread-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.recent-thread-no-img {
+    width: 80px;
+    height: 80px;
+    background: #e0e0e0;
+    border-radius: 4px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 12px;
+}
+
+.recent-thread-no-img::before {
+    content: "No image";
+}
+
+.recent-thread-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.recent-thread-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+}
+
+.recent-thread-board {
+    background: #c0392b;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.recent-thread-title {
+    font-weight: bold;
+    color: #2d217c;
+    font-size: 14px;
+}
+
+.recent-thread-date {
+    color: #666;
+    font-size: 12px;
+    margin-left: auto;
+}
+
+.recent-thread-text {
+    color: #333;
+    font-size: 14px;
+    line-height: 1.4;
+    margin-bottom: 6px;
+    word-break: break-word;
+}
+
+.recent-thread-link {
+    color: #800000;
+    font-size: 12px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.recent-thread-link:hover {
+    color: #c0392b;
+    text-decoration: underline;
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 768px) {
+    .recent-threads-box {
+        width: 100%;
+        max-width: 420px;
+    }
+    
+    .recent-thread-item {
+        padding: 10px;
+        gap: 10px;
+    }
+    
+    .recent-thread-img,
+    .recent-thread-no-img {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .recent-thread-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+    
+    .recent-thread-date {
+        margin-left: 0;
+    }
+}

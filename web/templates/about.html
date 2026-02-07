@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О проекте - vagonach</title>
+    <link rel="stylesheet" href="/static/styles/about.css">
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <img src="/static/img/vagonach-logo.png" alt="vagonach" class="logo-img">
+            <div class="logo-text">
+                <h1>Vagonach</h1>
+                <p>Учебный проект имиджборды</p>
+            </div>
+        </div>
+        <nav class="nav">
+            <a href="/">[Главная]</a>
+            <a href="/boards/g">[/g/ - Технологии]</a>
+            <a href="/boards/a">[/a/ - Аниме]</a>
+            <a href="/boards/pr">[/pr/ - Программирование]</a>
+            <a href="/about" class="current">[О проекте]</a>
+        </nav>
+    </div>
+
+    <div class="container">
+        <div class="main-content">
+            <section class="intro-section">
+                <h2>О проекте</h2>
+                <div class="intro-text">
+                    <p><strong>vagonach</strong> — это полнофункциональный клон имиджборды, созданный для демонстрации современных подходов к веб-разработке на языке Go.</p>
+                    <p>Проект реализует все основные функции классической имиджборды с использованием чистой архитектуры и современных технологий.</p>
+                </div>
+            </section>
+
+            <section class="stats-section">
+                <h2>Статистика проекта</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">{{.BoardsCount}}</div>
+                        <div class="stat-label">Активных бордов</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">{{.ThreadsCount}}</div>
+                        <div class="stat-label">Всего тредов</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">{{.PostsCount}}</div>
+                        <div class="stat-label">Всего постов</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">~2000</div>
+                        <div class="stat-label">Строк кода</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="tech-section">
+                <h2>Технологический стек</h2>
+                <div class="tech-grid">
+                    <div class="tech-category">
+                        <h3>Backend</h3>
+                        <ul>
+                            <li>Go 1.21+</li>
+                            <li>Gin Web Framework</li>
+                            <li>PostgreSQL</li>
+                            <li>pgx/v5 Driver</li>
+                        </ul>
+                    </div>
+                    <div class="tech-category">
+                        <h3>Frontend</h3>
+                        <ul>
+                            <li>HTML5</li>
+                            <li>CSS3</li>
+                            <li>Vanilla JavaScript</li>
+                            <li>Go Templates</li>
+                        </ul>
+                    </div>
+                    <div class="tech-category">
+                        <h3>Архитектура</h3>
+                        <ul>
+                            <li>Clean Architecture</li>
+                            <li>Repository Pattern</li>
+                            <li>Dependency Injection</li>
+                            <li>Layered Architecture</li>
+                        </ul>
+                    </div>
+                    <div class="tech-category">
+                        <h3>Инфраструктура</h3>
+                        <ul>
+                            <li>Docker Support</li>
+                            <li>Database Migrations</li>
+                            <li>Static File Serving</li>
+                            <li>Session Management</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="features-section">
+                <h2>Реализованные функции</h2>
+                <div class="features-grid">
+                    <div class="feature-group">
+                        <h3>Основной функционал</h3>
+                        <ul class="feature-list">
+                            <li>Создание и просмотр тредов</li>
+                            <li>Система постинга с изображениями</li>
+                            <li>Ответы на посты</li>
+                            <li>Древовидная структура комментариев</li>
+                            <li>Поддержка нескольких бордов</li>
+                        </ul>
+                    </div>
+                    <div class="feature-group">
+                        <h3>Администрирование</h3>
+                        <ul class="feature-list">
+                            <li>Административная панель</li>
+                            <li>Аутентификация админов</li>
+                            <li>Модерация контента</li>
+                            <li>Удаление тредов и постов</li>
+                            <li>Управление бордами</li>
+                        </ul>
+                    </div>
+                    <div class="feature-group">
+                        <h3>UI/UX</h3>
+                        <ul class="feature-list">
+                            <li>Адаптивный дизайн</li>
+                            <li>Классический стиль имиджборды</li>
+                            <li>Сворачивание длинных постов</li>
+                            <li>Превью изображений</li>
+                            <li>Интуитивная навигация</li>
+                        </ul>
+                    </div>
+                    <div class="feature-group">
+                        <h3>Безопасность</h3>
+                        <ul class="feature-list">
+                            <li>Защита от SQL-инъекций</li>
+                            <li>Валидация загружаемых файлов</li>
+                            <li>Безопасная обработка форм</li>
+                            <li>Логирование операций</li>
+                            <li>Контроль доступа</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="architecture-section">
+                <h2>Архитектура проекта</h2>
+                <div class="architecture-content">
+                    <div class="architecture-description">
+                        <p>Проект построен по принципам <strong>Clean Architecture</strong>:</p>
+                        <ul>
+                            <li>Слабая связанность между компонентами</li>
+                            <li>Легкость тестирования</li>
+                            <li>Возможность замены инфраструктурных компонентов</li>
+                            <li>Четкое разделение ответственности</li>
+                        </ul>
+                    </div>
+                    <div class="architecture-diagram">
+                        <pre class="code-structure">
+internal/
+├── entity/              # Бизнес-сущности
+│   ├── board.go
+│   ├── thread.go
+│   ├── post.go
+│   └── admin.go
+├── usecase/             # Бизнес-логика
+│   ├── board_service.go
+│   ├── thread_service.go
+│   └── post_service.go
+├── repository/          # Интерфейсы
+│   └── interfaces.go
+├── repository/postgresql/ # Реализация
+│   ├── board_repo.go
+│   ├── thread_repo.go
+│   └── post_repo.go
+├── transport/http/      # HTTP слой
+│   ├── handler.go
+│   ├── routes.go
+│   └── middleware.go
+├── db/                  # База данных
+│   └── postgres.go
+└── app/                 # Инициализация
+    └── app.go
+                        </pre>
+                    </div>
+                </div>
+            </section>
+
+            <section class="roadmap-section">
+                <h2>Планы развития</h2>
+                <div class="roadmap-grid">
+                    <div class="roadmap-item">
+                        <h3>Ближайшие планы</h3>
+                        <ul>
+                            <li>Система капчи</li>
+                            <li>WebSocket для real-time</li>
+                            <li>Поиск по постам</li>
+                            <li>Темная тема</li>
+                        </ul>
+                    </div>
+                    <div class="roadmap-item">
+                        <h3>Долгосрочные цели</h3>
+                        <ul>
+                            <li>Mobile API</li>
+                            <li>Система банов</li>
+                            <li>Уведомления</li>
+                            <li>Экспорт данных</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <aside class="sidebar">
+            <div class="info-card">
+                <h3>Информация о проекте</h3>
+                <div class="project-info">
+                    <div class="info-item">
+                        <strong>Версия:</strong> 1.0.0
+                    </div>
+                    <div class="info-item">
+                        <strong>Дата создания:</strong> Июль 2025
+                    </div>
+                    <div class="info-item">
+                        <strong>Лицензия:</strong> MIT
+                    </div>
+                    <div class="info-item">
+                        <strong>Статус:</strong> В разработке
+                    </div>
+                </div>
+            </div>
+
+            <div class="links-card">
+                <h3>Полезные ссылки</h3>
+                <ul class="links-list">
+                    <li><a href="/">Главная страница</a></li>
+                    <li><a href="/boards/g">Доска /g/</a></li>
+                    <li><a href="/admin">Админ панель</a></li>
+                    <li><a href="https://github.com/vagonaizer/2ch-clone" onclick="alert('GitHub репозиторий')">GitHub</a></li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 vagonach. Создано в образовательных целях.</p>
+    </footer>
+</body>
+</html>
