@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anonymous imageboard</title>
+    <link rel="stylesheet" href="/static/styles/index.css">
+</head>
+<body>
+    <header>
+        <div>
+            <img src="/static/img/vagonach-logo.png" alt="Logo">
+        </div>
+        <div>
+            <h1>Anonymous imageboard.</h1>
+        </div>
+    </header>
+
+    <main>
+        <section class="boards-box">
+            <div class="boards-header">Boards</div>
+            <ul>
+                <li><a href="/boards/g">General</a></li>
+                <li><a href="/boards/a">Anime</a></li>
+                <li><a href="/boards/pr">Programming</a></li>
+                <li><a href="/boards/un">Universities</a></li>
+                <li><a href="/boards/po">Politics</a></li>
+            </ul>
+        </section>
+
+        <section class="recent-threads-box">
+            <div class="recent-threads-header">Recent Threads</div>
+            <div class="recent-threads-list">
+                {{range .RecentThreads}}
+                <div class="recent-thread-item">
+                    {{if .ImageURL}}
+                    <img src="{{.ImageURL}}" alt="Thread image" class="recent-thread-img">
+                    {{else}}
+                    <div class="recent-thread-no-img"></div>
+                    {{end}}
+                    <div class="recent-thread-content">
+                        <div class="recent-thread-header">
+                            <span class="recent-thread-board">/{{.BoardSlug}}/</span>
+                            {{if .Title}}
+                            <span class="recent-thread-title">{{.Title}}</span>
+                            {{end}}
+                            <span class="recent-thread-date">{{.CreatedAt.Format "02.01 15:04"}}</span>
+                        </div>
+                        <div class="recent-thread-text">{{.TruncatedText}}</div>
+                        <a href="/threads/{{.ID}}" class="recent-thread-link">Read more →</a>
+                    </div>
+                </div>
+                {{end}}
+            </div>
+        </section>
+    </main>
+
+    <div class="footer-links">
+        <a href="/about">FAQ</a>
+        <a href="https://github.com/vagonaizer">Github</a>
+    </div>
+</body>
+</html>

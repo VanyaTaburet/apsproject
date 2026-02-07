@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{.Thread.Title}}</title>
+    <link rel="stylesheet" href="/static/styles/thread.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <header>
+        <div>
+            <a href="http://localhost:8080/">
+                <img src="/static/img/vagonach-logo.png" alt="Logo">
+            </a>
+        </div>
+        <div>
+            <h1>Anonymous imageboard.</h1>
+        </div>
+    </header>
+<div id="img-modal" class="img-modal" style="display:none;">
+    <span class="img-modal__close" id="img-modal-close">&times;</span>
+    <img class="img-modal__img" id="img-modal-img" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="preview">
+</div>
+<div class="dvach-layout">
+    <nav class="dvach-nav">
+        <div class="dvach-nav__title">Boards</div>
+        <ul class="dvach-nav__list">
+            <li><a href="/boards/a">/a/ Anime</a></li>
+            <li><a href="/boards/b">/g/ General</a></li>
+            <li><a href="/boards/po">/po/ Politics</a></li>
+            <li><a href="/boards/un">/un/ Universities</a></li>
+            <li><a href="/boards/pr">/pr Programming</a></li>
+        </ul>
+    </nav>
+    <main class="dvach-main">
+        <div class="thread-container">
+            <a href="/boards/{{.Thread.BoardSlug}}">Назад к доске</a>
+            <h1>{{.Thread.Title}}</h1>
+            <div class="thread-meta">
+                <span>Автор: {{.Thread.Author}}</span>
+                <span>Дата: {{.Thread.CreatedAt.Format "02.01.2006 15:04"}}</span>
+                <span>№{{.Thread.ID}}</span>
+            </div>
+            <div class="thread-posts">
+                {{range .Posts}}
+                <div class="post">
+                    {{if .ImageURL}}
+                    <img src="{{.ImageURL}}" alt="image" class="post-image">
+                    {{end}}
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span>Аноним</span>
+                            <span>{{.CreatedAt.Format "02.01.2006 15:04"}}</span>
+                            <span>№{{.ID}}</span>
+                        </div>
+                        <div class="post-text">{{.Text}}</div>
+                    </div>
+                </div>
+                {{end}}
+            </div>
+            <form class="post-form" action="/threads/{{.Thread.ID}}/posts" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="board_slug" value="{{.Thread.BoardSlug}}">
+                <input type="text" name="author" placeholder="Author (optional)" class="post-form__input">
+                <textarea name="text" placeholder="Текст" class="post-form__textarea"></textarea>
+                <label for="image-upload" class="visually-hidden">Image</label>
+                <input type="file" id="image-upload" name="image" accept="image/*" class="post-form__input" title="Загрузить картинку">
+                <button type="submit" class="post-form__button">Reply</button>
+            </form>
+        </div>
+    </main>
+</div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    // Создаем кнопку меню
+    const menuToggle = document.createElement('button');
+    menuToggle.className = 'menu-toggle btn';
+    menuToggle.textContent = '☰ Menu';
+    document.body.appendChild(menuToggle);
+    
+    // Создаем overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'nav-overlay';
+    document.body.appendChild(overlay);
+    
+    // Создаем кнопку Reply
+    const replyToggle = document.createElement('div');
+    replyToggle.className = 'reply-toggle';
+    replyToggle.innerHTML = '<button class="btn" id="reply-btn">[Reply]</button>';
+    
+    // Вставляем кнопку Reply перед формой
+    const form = document.querySelector('.post-form');
+    form.parentNode.insertBefore(replyToggle, form);
+    
+    // Делаем форму плавающей
+    form.innerHTML = `
+        <div class="post-form__header">
+            <div class="post-form__title">Post a Reply</div>
+            <button class="post-form__close" type="button">×</button>
+        </div>
+        <div class="post-form__body">
+            ${form.innerHTML}
+        </div>
+    `;
+    
+    const nav = document.querySelector('.dvach-nav');
+    const main = document.querySelector('.dvach-main');
+    
+    // Открытие/закрытие меню
+    menuToggle.addEventListener('click', function() {
+        nav.classList.toggle('open');
+        overlay.classList.toggle('active');
+        main.classList.toggle('shifted');
+        menuToggle.classList.toggle('open');
+        
+        if (nav.classList.contains('open')) {
+            menuToggle.textContent = '✕ Close';
+        } else {
+            menuToggle.textContent = '☰ Menu';
+        }
+    });
+    
+    // Закрытие меню по клику на overlay
+    overlay.addEventListener('click', function() {
+        nav.classList.remove('open');
+        overlay.classList.remove('active');
+        main.classList.remove('shifted');
+        menuToggle.classList.remove('open');
+        menuToggle.textContent = '☰ Menu';
+    });
+    
+    // Открытие/закрытие формы Reply
+    const replyBtn = document.getElementById('reply-btn');
+    const closeBtn = form.querySelector('.post-form__close');
+    
+    replyBtn.addEventListener('click', function() {
+        form.classList.add('active');
+    });
+    
+    closeBtn.addEventListener('click', function() {
+        form.classList.remove('active');
+    });
+    
+    // Перетаскивание формы
+    let isDragging = false;
+    let currentX;
+    let currentY;
+    let initialX;
+    let initialY;
+    let xOffset = 0;
+    let yOffset = 0;
+    
+    const header = form.querySelector('.post-form__header');
+    
+    header.addEventListener('mousedown', dragStart);
+    document.addEventListener('mousemove', drag);
+    document.addEventListener('mouseup', dragEnd);
+    
+    function dragStart(e) {
+        initialX = e.clientX - xOffset;
+        initialY = e.clientY - yOffset;
+        
+        if (e.target === header || header.contains(e.target)) {
+            isDragging = true;
+        }
+    }
+    
+    function drag(e) {
+        if (isDragging) {
+            e.preventDefault();
+            currentX = e.clientX - initialX;
+            currentY = e.clientY - initialY;
+            
+            xOffset = currentX;
+            yOffset = currentY;
+            
+            form.style.transform = `translate(${currentX}px, ${currentY}px)`;
+        }
+    }
+    
+    function dragEnd(e) {
+        initialX = currentX;
+        initialY = currentY;
+        isDragging = false;
+    }
+    
+    // Закрытие по Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            if (nav.classList.contains('open')) {
+                nav.classList.remove('open');
+                overlay.classList.remove('active');
+                main.classList.remove('shifted');
+                menuToggle.classList.remove('open');
+                menuToggle.textContent = '☰ Menu';
+            }
+            if (form.classList.contains('active')) {
+                form.classList.remove('active');
+            }
+            document.getElementById('img-modal').style.display = 'none';
+        }
+    });
+
+    // Модальное окно изображений
+    document.querySelectorAll('.post-image').forEach(function(img) {
+        img.style.cursor = 'zoom-in';
+        img.addEventListener('click', function() {
+            var modal = document.getElementById('img-modal');
+            var modalImg = document.getElementById('img-modal-img');
+            modal.style.display = 'flex';
+            modalImg.src = this.src;
+        });
+    });
+
+    document.getElementById('img-modal-close').onclick = function() {
+        document.getElementById('img-modal').style.display = 'none';
+    };
+
+    document.getElementById('img-modal').onclick = function(e) {
+        if (e.target === this) this.style.display = 'none';
+    };
+});
+    </script>
+</body>
+</html>

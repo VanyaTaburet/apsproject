@@ -1,0 +1,497 @@
+/* Ваш существующий CSS + изменения */
+body {
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(to bottom, #fffbe6 0%, #f8e4cc 100%);
+    font-family: Arial, Helvetica, sans-serif;
+    position: relative;
+  }
+  
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background-size: 18px 18px;
+    background-position: 0 0;
+  }
+  
+  /* ДОБАВЛЕНИЕ: Унифицированный стиль кнопок */
+  .btn {
+    background: #e8dcc6;
+    border: 1px solid #b8860b;
+    color: #800000;
+    font-size: 11pt;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 3px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+  }
+  
+  .btn:hover {
+    background: #ddd0b4;
+    color: #600000;
+  }
+  
+  .btn:active {
+    transform: translateY(1px);
+  }
+  
+  /* ДОБАВЛЕНИЕ: Навигационное меню */
+  .dvach-nav {
+    width: 200px;
+    background: #e8dcc6;
+    border-right: 2px solid #b8860b;
+    position: fixed;
+    height: 100vh;
+    top: 0;
+    left: -200px;
+    transition: left 0.3s ease;
+    z-index: 100;
+    overflow-y: auto;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dvach-nav.open {
+    left: 0;
+  }
+  
+  .dvach-nav__title {
+    background: #e8dcc6;
+    color: #800000;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #b8860b;
+    cursor: pointer;
+    position: sticky;
+    top: 0;
+  }
+  
+  .dvach-nav__title:hover {
+    background: #ddd0b4;
+  }
+  
+  .dvach-nav__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .dvach-nav__list li {
+    border-bottom: 1px solid #b8860b;
+  }
+  
+  .dvach-nav__list a {
+    display: block;
+    padding: 12px 15px;
+    color: #222;
+    text-decoration: none;
+    font-size: 11pt;
+    background: #e8dcc6;
+    transition: all 0.2s;
+  }
+  
+  .dvach-nav__list a:hover {
+    background: #ddd0b4;
+    color: #800000;
+  }
+  
+  /* ДОБАВЛЕНИЕ: Кнопка меню */
+  .menu-toggle {
+    position: fixed;
+    top: 15px;
+    left: 10px;
+    z-index: 101;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .menu-toggle.open {
+    left: 210px;
+  }
+  
+  /* ДОБАВЛЕНИЕ: Overlay для закрытия меню */
+  .nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 99;
+    display: none;
+  }
+  
+  .nav-overlay.active {
+    display: block;
+  }
+  
+  /* ДОБАВЛЕНИЕ: Сдвиг контента при открытом меню */
+  .content-shifted {
+    margin-left: 200px;
+    transition: margin-left 0.3s ease;
+  }
+  
+  header {
+    text-align: center;
+    margin-top: 24px;
+    margin-bottom: 8px;
+  }
+  
+  header img {
+    max-width: 320px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  header h1 {
+    margin: 8px 0 0 0;
+    font-size: 16px;
+    color: #196b19;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+  }
+  
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .start-thread-btn-wrap {
+    text-align: center;
+    margin: 16px 0;
+  }
+  
+  .start-thread-btn {
+    font-size: 16px;
+    padding: 8px 20px;
+  }
+  
+  .thread-form {
+    background: #f9f3e6;
+    border: 1.5px solid #c48a3b;
+    padding: 16px 12px 12px 12px;
+    margin-bottom: 24px;
+    width: 420px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    text-align: left;
+  }
+  
+  .thread-form__input,
+  .thread-form__textarea {
+    background: #fff;
+    border: 1px solid #c48a3b;
+    border-radius: 3px;
+    font-size: 15px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 6px;
+  }
+  
+  .thread-form__input-wide {
+    width: 320px;
+    margin-bottom: 8px;
+  }
+  
+  .close-thread-btn {
+    font-size: 11pt;
+    padding: 6px 12px;
+    margin-left: 8px;
+    margin-top: 6px;
+  }
+  
+  .post-btn,
+  .thread-form__button {
+    margin-left: 8px;
+    padding: 6px 16px;
+    font-size: 11pt;
+  }
+  
+  .board-banner {
+    margin-top: 30px;
+  }
+  
+  .board-banner-img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .board-title {
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+    color: #800000;
+    margin-top: 12px;
+    margin-bottom: 16px;
+  }
+  
+  .board-slug {
+    color: #c0392b;
+    font-weight: bold;
+  }
+  
+  /* ИЗМЕНЕНИЕ: Новый стиль для списка тредов */
+  .threads-list {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+  
+  /* ИЗМЕНЕНИЕ: Убираем белые коробки, добавляем разделительные линии */
+  .thread-preview-row {
+    position: relative;
+  padding: 15px 0;
+  background: transparent;
+  box-sizing: border-box;
+  }
+
+.thread-preview-row::before,
+.thread-preview-row::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: #222;
+  width: 100vw; /* вся ширина окна */
+  transform: translateX(-50%);
+  left: 50%;
+}
+
+.thread-preview-row::before {
+  top: 0;
+}
+
+.thread-preview-row::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 1px;
+    width: 100vw;
+    background-color: #222;
+}
+
+  
+  .thread-preview-row:first-child {
+    border-top: 1px solid #222222;
+    padding-top: 15px;
+  }
+  
+  .thread-preview-row:last-child {
+    border-bottom: 1px solid #222222;
+  }
+  
+  /* ИЗМЕНЕНИЕ: Основной пост треда */
+  .thread-main-post {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 10px;
+  }
+  
+  .thread-preview-img {
+    max-width: 200px;
+    max-height: 150px;
+    border-radius: 4px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+  
+  .thread-preview-content {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .thread-preview-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+  
+  .thread-title-small {
+    font-size: 14px;
+    font-weight: bold;
+    color: #2d217c;
+    margin-right: 8px;
+  }
+  
+  .thread-author {
+    font-size: 13px;
+    color: #064422;
+    font-weight: bold;
+  }
+  
+  .thread-date {
+    color: #000000;
+    font-size: 12px;
+  }
+  
+  .thread-id {
+    color: #b31010;
+    font-size: 12px;
+    margin-left: 8px;
+  }
+  
+  .reply-link {
+    color: #800000;
+    font-size: 12px;
+    text-decoration: underline;
+    margin-left: auto;
+  }
+  
+  .reply-link:hover {
+    color: #c0392b;
+  }
+  
+  .thread-preview-text {
+    font-size: 13px;
+    color: #222;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin-top: 4px;
+  }
+  
+  /* ДОБАВЛЕНИЕ: Стили для комментариев */
+  .thread-replies {
+    margin-top: 10px;
+    margin-left: 20px;
+    border-left: 2px solid #2222;
+    padding-left: 15px;
+  }
+  
+  .thread-reply {
+    margin-bottom: 8px;
+    padding: 5px 0;
+    border-bottom: 1px dotted #2222;
+  }
+  
+  .thread-reply:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+  
+  .reply-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+    font-size: 12px;
+  }
+  
+  .reply-author {
+    color: #064422;
+    font-weight: bold;
+    font-size: 12px;
+  }
+  
+  .reply-date {
+    color: #666;
+    font-size: 11px;
+  }
+  
+  .reply-id {
+    color: #b31010;
+    font-size: 11px;
+  }
+  
+  .reply-text {
+    font-size: 12px;
+    color: #333;
+    line-height: 1.3;
+    margin-left: 0;
+  }
+  
+  .reply-image {
+    max-width: 120px;
+    max-height: 80px;
+    border-radius: 3px;
+    object-fit: contain;
+    margin-right: 8px;
+    float: left;
+  }
+  
+  /* ДОБАВЛЕНИЕ: Показать больше ответов */
+  .show-more-replies {
+    color: #800000;
+    font-size: 12px;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 5px;
+    display: inline-block;
+  }
+  
+  .show-more-replies:hover {
+    color: #c0392b;
+  }
+  
+  /* ДОБАВЛЕНИЕ: Responsive для меню */
+  @media (max-width: 768px) {
+    .menu-toggle {
+      top: 10px;
+    }
+  
+    .menu-toggle.open {
+      left: 210px;
+    }
+  
+    .content-shifted {
+      margin-left: 0;
+    }
+  
+    .threads-list {
+      padding: 0 10px;
+    }
+  
+    .thread-main-post {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .thread-preview-img {
+      max-width: 100%;
+      align-self: flex-start;
+    }
+  
+    .thread-replies {
+      margin-left: 10px;
+      padding-left: 10px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .thread-preview-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+  
+    .reply-link {
+      margin-left: 0;
+      margin-top: 4px;
+    }
+  }
+  

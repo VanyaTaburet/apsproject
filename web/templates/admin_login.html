@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход в админ-панель - vagonach</title>
+    <link rel="stylesheet" href="/static/styles/admin.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div class="login-page">
+        <div class="login-header">
+            <img src="/static/img/vagonach-logo.png" alt="vagonach" class="login-logo">
+            <h1>vagonach</h1>
+            <p>Админ-панель</p>
+        </div>
+
+        <div class="login-container">
+            <div class="login-box">
+                <h2>Вход в систему</h2>
+
+                {{ if .Error }}
+                <div class="error-message">{{ .Error }}</div>
+                {{ end }}
+
+                <form method="post" action="/admin/login" class="login-form">
+                    <div class="input-group">
+                        <label for="username">Имя пользователя</label>
+                        <input type="text" id="username" name="username" placeholder="Введите имя пользователя" required class="login-input">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="password">Пароль</label>
+                        <input type="password" id="password" name="password" placeholder="Введите пароль" required class="login-input">
+                    </div>
+
+                    <button type="submit" class="login-button">Войти</button>
+                </form>
+
+                <div class="login-footer">
+                    <a href="/">← Вернуться на главную</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
