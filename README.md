@@ -120,13 +120,13 @@
 
 ### Рисунок 1 — C4 Context Diagram
 
-![C4 Context Diagram](images/C4 Context Diagram.png)
+![C4 Context Diagram](images/C4_Context_Diagram.png)
 
 
 ### Рисунок 2 — C4 Container Diagram
 
 
-![C4 Container Diagram](images/C4 Container Diagram.png)
+![C4 Container Diagram](images/C4_Container_Diagram.png)
 
 ---
 
